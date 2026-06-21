@@ -1,0 +1,12 @@
+FROM eclipse-temurin:17-jdk-alpine AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN apk add --no-cache maven && mvn package -DskipTests -q
+
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/slm-backend-1.0.0.jar app.jar
+ENV SPRING_PROFILES_ACTIVE=render
+EXPOSE 8081
+ENTRYPOINT ["java", "-jar", "app.jar"]

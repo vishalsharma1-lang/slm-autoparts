@@ -1,0 +1,14 @@
+target/
+*.jar
+*.class
+.mvn/
+backend/data/
+backend/.mvn/
+
+node_modules/
+dist/
+.env
+.env.local
+
+.claude/
+*.log
