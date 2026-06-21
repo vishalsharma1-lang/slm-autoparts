@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SpaController {
 
-    @RequestMapping(value = { "/", "/{path:[^\\.]*}", "/{path:[^\\.]*}/**" })
+    @GetMapping(value = { "/", "/{path:^(?!api|assets|favicon).*$}", "/{path:^(?!api|assets|favicon).*$}/**" })
     public String forward() {
         return "forward:/index.html";
     }
