@@ -18,4 +18,4 @@ WORKDIR /app
 COPY --from=backend-build /app/target/slm-backend-1.0.0.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=render
 EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx256m", "-Xms128m", "-XX:MaxMetaspaceSize=128m", "-XX:+UseSerialGC", "-jar", "app.jar"]

@@ -5,6 +5,9 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: .
     plan: free
+    healthCheckPath: /api/categories
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: render
+      - key: PORT
+        value: 8081
