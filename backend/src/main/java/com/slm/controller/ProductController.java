@@ -5,6 +5,7 @@ import com.slm.entity.Product;
 import com.slm.repository.CategoryRepository;
 import com.slm.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,16 +21,19 @@ public class ProductController {
     private final CategoryRepository categoryRepo;
 
     @GetMapping
-    public List<Product> getAll(
+    public ResponseEntity<?> getAll(
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String q,
             @RequestParam(defaultValue = "false") boolean featured,
-            @RequestParam(defaultValue = "false") boolean admin) {
+            @RequestParam(defaultValue = "false") boolean admin,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "24") int size) {
 
-        if (q != null && !q.isBlank()) return service.search(q);
-        if (featured) return service.getFeatured();
-        if (categoryId != null) return service.getByCategory(categoryId);
-        return admin ? service.getAllAdmin() : service.getAll();
+        if (admin) return ResponseEntity.ok(service.getAllAdmin());
+        if (featured) return ResponseEntity.ok(service.getFeatured());
+        if (q != null && !q.isBlank()) return ResponseEntity.ok(service.search(q, page, size));
+        if (categoryId != null) return ResponseEntity.ok(service.getByCategory(categoryId, page, size));
+        return ResponseEntity.ok(service.getAll(page, size));
     }
 
     @GetMapping("/{id}")

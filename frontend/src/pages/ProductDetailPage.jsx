@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from '../api'
 import { useCart } from '../context/CartContext'
@@ -58,7 +58,7 @@ export default function ProductDetailPage() {
 
             {/* Trust badges */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginTop: 14 }}>
-              {[['ðŸ›¡ï¸','Warranty','Backed'],['ðŸšš','Fast','Dispatch'],['ðŸ”','30-Day','Returns']].map(([icon,l1,l2],i) => (
+              {[['🛡️','Warranty','Backed'],['🚚','Fast','Dispatch'],['🔁','30-Day','Returns']].map(([icon,l1,l2],i) => (
                 <div key={i} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 8, padding: '10px', textAlign: 'center' }}>
                   <div style={{ fontSize: '1.4rem' }}>{icon}</div>
                   <div style={{ fontSize: '11px', fontWeight: 700, marginTop: 4 }}>{l1}</div>
@@ -81,7 +81,7 @@ export default function ProductDetailPage() {
             </div>
 
             <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: 4 }}>
-              â‚¹{Number(product.price).toLocaleString('en-IN')}
+              ₹{Number(product.price).toLocaleString('en-IN')}
             </div>
             <div style={{ fontSize: '12px', color: 'var(--text3)', marginBottom: 16 }}>Inclusive of all taxes (GST)</div>
 
@@ -89,8 +89,8 @@ export default function ProductDetailPage() {
             <div style={{ background: '#f9fafb', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', marginBottom: 18 }}>
               {[
                 ['Pack Size', product.weight || '1 Pc'],
-                ['Category', product.category?.name || 'â€”'],
-                ['Availability', product.stock > 0 ? 'âœ… In Stock' : 'âŒ Out of Stock'],
+                ['Category', product.category?.name || '—'],
+                ['Availability', product.stock > 0 ? '✅ In Stock' : 'âŒ Out of Stock'],
               ].map(([k, v], i) => (
                 <div key={i} style={{ display: 'flex', borderBottom: i < 2 ? '1px solid var(--border)' : 'none' }}>
                   <div style={{ width: 140, padding: '10px 14px', fontSize: '12px', color: 'var(--text3)', fontWeight: 600, background: '#f3f4f6', borderRight: '1px solid var(--border)' }}>{k}</div>
@@ -102,7 +102,7 @@ export default function ProductDetailPage() {
             {/* Compatible vehicles */}
             {vehicles.length > 0 && (
               <div style={{ marginBottom: 18 }}>
-                <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text2)', marginBottom: 7 }}>ðŸš— Compatible Vehicles</div>
+                <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text2)', marginBottom: 7 }}>🚗 Compatible Vehicles</div>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {vehicles.map((v, i) => (
                     <span key={i} style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 4, padding: '3px 10px', fontSize: '11.5px', color: '#1d4ed8', fontWeight: 600 }}>{v}</span>
@@ -127,18 +127,18 @@ export default function ProductDetailPage() {
                       onClick={() => updateQty(product.id, cartItem.qty + 1)}>+</button>
                   </div>
                   <button className="btn btn-primary btn-lg" onClick={() => navigate('/checkout')}>
-                    Checkout â†’
+                    Checkout →
                   </button>
                 </>
               ) : (
                 <button className="btn btn-primary btn-lg" onClick={() => addItem(product)}>
-                  ðŸ›’ Add to Cart
+                  🛒 Add to Cart
                 </button>
               )}
             </div>
 
             <div className="highlight-box" style={{ marginTop: 16 }}>
-              ðŸšš Free delivery on orders above â‚¹999 Â· Ships within 24 hours
+              🚚 Free delivery on orders above ₹999 Â· Ships within 24 hours
             </div>
           </div>
         </div>

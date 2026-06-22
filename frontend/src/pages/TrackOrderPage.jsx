@@ -1,10 +1,10 @@
-﻿import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import axios from '../api'
 
 const STATUS_STEPS = ['PLACED', 'PREPARING', 'OUT_FOR_DELIVERY', 'DELIVERED']
 const STEP_LABELS = { PLACED: 'Order Placed', PREPARING: 'Preparing', OUT_FOR_DELIVERY: 'Out for Delivery', DELIVERED: 'Delivered' }
-const STEP_ICONS = { PLACED: 'ðŸ“‹', PREPARING: 'ðŸ‘¨â€ðŸ³', OUT_FOR_DELIVERY: 'ðŸšš', DELIVERED: 'âœ…' }
+const STEP_ICONS = { PLACED: 'ðŸ“‹', PREPARING: 'ðŸ‘¨â€ðŸ³', OUT_FOR_DELIVERY: '🚚', DELIVERED: '✅' }
 
 function StatusProgress({ status }) {
   if (status === 'CANCELLED') {
@@ -59,12 +59,12 @@ function OrderCard({ order }) {
           {order.items.map(item => (
             <div key={item.id} className="order-item-row">
               <span>{item.productName} Ã— {item.quantity}</span>
-              <span>â‚¹{(item.unitPrice * item.quantity).toFixed(0)}</span>
+              <span>₹{(item.unitPrice * item.quantity).toFixed(0)}</span>
             </div>
           ))}
           <div className="order-total-row">
             <span>Total</span>
-            <span className="amt">â‚¹{Number(order.totalAmount).toFixed(0)}</span>
+            <span className="amt">₹{Number(order.totalAmount).toFixed(0)}</span>
           </div>
         </div>
       )}
@@ -114,7 +114,7 @@ export default function TrackOrderPage() {
             <span className="sep">â€º</span>
             <span>Track Order</span>
           </div>
-          <h1 style={{ fontSize: '1.8rem', marginTop: 8 }}>ðŸ“¦ Track Your Order</h1>
+          <h1 style={{ fontSize: '1.8rem', marginTop: 8 }}>📦 Track Your Order</h1>
           <p style={{ opacity: .75, marginTop: 6, fontSize: '.9rem' }}>Enter your phone number to track all your orders.</p>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default function TrackOrderPage() {
           {!loading && searched && orders !== null && (
             orders.length === 0 ? (
               <div className="empty-state">
-                <div className="icon">ðŸ“¦</div>
+                <div className="icon">📦</div>
                 <h3>No orders found</h3>
                 <p>No orders found for this phone number.</p>
               </div>
@@ -149,7 +149,7 @@ export default function TrackOrderPage() {
 
           {!searched && !orderId && (
             <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text3)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: 16 }}>ðŸ“±</div>
+              <div style={{ fontSize: '3rem', marginBottom: 16 }}>📱</div>
               <p>Enter your phone number above to track your orders.</p>
             </div>
           )}

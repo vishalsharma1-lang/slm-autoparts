@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from '../api'
 import toast from 'react-hot-toast'
 
@@ -42,7 +42,7 @@ function ProductModal({ product, categories, onSave, onClose }) {
               {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </div>
-          <div className="form-group"><label>Price (â‚¹) *</label><input type="number" value={form.price} onChange={e => set('price', e.target.value)} placeholder="1480" /></div>
+          <div className="form-group"><label>Price (₹) *</label><input type="number" value={form.price} onChange={e => set('price', e.target.value)} placeholder="1480" /></div>
         </div>
         <div className="form-row">
           <div className="form-group"><label>Pack / Unit</label><input value={form.weight} onChange={e => set('weight', e.target.value)} placeholder="1 Pc / Set of 4" /></div>
@@ -132,10 +132,10 @@ export default function AdminPage() {
   const pending = orders.filter(o => o.status === 'PLACED').length
 
   const nav = [
-    { id: 'dashboard', icon: 'ðŸ“Š', label: 'Dashboard' },
-    { id: 'orders', icon: 'ðŸ“¦', label: 'Orders' },
-    { id: 'products', icon: 'ðŸ”©', label: 'Parts Catalog' },
-    { id: 'categories', icon: 'ðŸ“‚', label: 'Categories' },
+    { id: 'dashboard', icon: '📊', label: 'Dashboard' },
+    { id: 'orders', icon: '📦', label: 'Orders' },
+    { id: 'products', icon: '🔩', label: 'Parts Catalog' },
+    { id: 'categories', icon: '📂', label: 'Categories' },
   ]
 
   return (
@@ -146,7 +146,7 @@ export default function AdminPage() {
       <div className="admin-layout">
         <div className="admin-sidebar">
           <div className="admin-sidebar-header">
-            <h3>ðŸ”© CarDekho Auto Parts</h3>
+            <h3>🔩 CarDekho Auto Parts</h3>
             <p>Parts Management Portal</p>
           </div>
           <div className="admin-nav-section">
@@ -158,7 +158,7 @@ export default function AdminPage() {
             ))}
           </div>
           <div style={{ padding: '16px', marginTop: 8 }}>
-            <a href="/" style={{ color: 'rgba(255,255,255,.45)', fontSize: '12px' }}>â† Back to Store</a>
+            <a href="/" style={{ color: 'rgba(255,255,255,.45)', fontSize: '12px' }}>← Back to Store</a>
           </div>
         </div>
 
@@ -171,7 +171,7 @@ export default function AdminPage() {
                 <div className="stat-card"><div className="val">{products.length}</div><div className="lbl">Total Parts</div></div>
                 <div className="stat-card"><div className="val">{orders.length}</div><div className="lbl">Total Orders</div></div>
                 <div className="stat-card"><div className="val" style={{ color: pending > 0 ? 'var(--primary)' : 'var(--green)' }}>{pending}</div><div className="lbl">Pending Orders</div></div>
-                <div className="stat-card"><div className="val">â‚¹{revenue.toLocaleString('en-IN')}</div><div className="lbl">Total Revenue</div></div>
+                <div className="stat-card"><div className="val">₹{revenue.toLocaleString('en-IN')}</div><div className="lbl">Total Revenue</div></div>
                 <div className="stat-card"><div className="val">{categories.length}</div><div className="lbl">Categories</div></div>
               </div>
               <h3 style={{ fontWeight: 700, marginBottom: 14, fontSize: '14px' }}>Recent Orders</h3>
@@ -183,7 +183,7 @@ export default function AdminPage() {
                       <td style={{ fontWeight: 700 }}>#{o.id}</td>
                       <td><b>{o.customerName}</b><br /><span style={{ color: 'var(--text3)', fontSize: '11px' }}>{o.phone}</span></td>
                       <td style={{ fontSize: '11px' }}>{o.items?.length || 0} part(s)</td>
-                      <td style={{ fontWeight: 700 }}>â‚¹{Number(o.totalAmount).toLocaleString('en-IN')}</td>
+                      <td style={{ fontWeight: 700 }}>₹{Number(o.totalAmount).toLocaleString('en-IN')}</td>
                       <td><span className={`status-pill status-${o.status}`}>{STATUS_LABELS[o.status] || o.status}</span></td>
                       <td style={{ fontSize: '11px' }}>{new Date(o.createdAt).toLocaleDateString('en-IN')}</td>
                       <td><button className="action-btn status" onClick={() => setEditOrder(o)}>Update</button></td>
@@ -206,7 +206,7 @@ export default function AdminPage() {
                       <td><b>{o.customerName}</b><div style={{ fontSize: '11px', color: 'var(--text3)' }}>{o.phone}</div></td>
                       <td style={{ fontSize: '11px', maxWidth: 130 }}>{o.address}{o.city ? `, ${o.city}` : ''}</td>
                       <td style={{ fontSize: '11px' }}>{o.items?.map(i => <div key={i.id}>{i.productName} Ã—{i.quantity}</div>)}</td>
-                      <td style={{ fontWeight: 700 }}>â‚¹{Number(o.totalAmount).toLocaleString('en-IN')}</td>
+                      <td style={{ fontWeight: 700 }}>₹{Number(o.totalAmount).toLocaleString('en-IN')}</td>
                       <td><span className={`status-pill status-${o.status}`}>{STATUS_LABELS[o.status] || o.status}</span></td>
                       <td style={{ fontSize: '11px' }}>{new Date(o.createdAt).toLocaleDateString('en-IN')}</td>
                       <td><button className="action-btn status" onClick={() => setEditOrder(o)}>Update</button></td>
@@ -228,13 +228,13 @@ export default function AdminPage() {
                 <tbody>
                   {products.map(p => (
                     <tr key={p.id}>
-                      <td>{p.imageUrl ? <img src={p.imageUrl} className="img-preview" alt="" onError={e => e.target.style.display = 'none'} /> : <div style={{ width: 60, height: 60, background: '#f3f4f6', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>ðŸ”©</div>}</td>
-                      <td><b style={{ fontSize: '12.5px' }}>{p.name}</b>{p.isFeatured && <span style={{ marginLeft: 6, fontSize: '10px', background: '#fff3ee', color: 'var(--primary)', padding: '1px 6px', borderRadius: 3 }}>â˜…</span>}</td>
-                      <td style={{ fontSize: '12px' }}>{p.category?.name || 'â€”'}</td>
-                      <td style={{ fontWeight: 700 }}>â‚¹{Number(p.price).toLocaleString('en-IN')}</td>
-                      <td style={{ fontSize: '12px' }}>{p.weight || 'â€”'}</td>
+                      <td>{p.imageUrl ? <img src={p.imageUrl} className="img-preview" alt="" onError={e => e.target.style.display = 'none'} /> : <div style={{ width: 60, height: 60, background: '#f3f4f6', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>🔩</div>}</td>
+                      <td><b style={{ fontSize: '12.5px' }}>{p.name}</b>{p.isFeatured && <span style={{ marginLeft: 6, fontSize: '10px', background: '#fff3ee', color: 'var(--primary)', padding: '1px 6px', borderRadius: 3 }}>★</span>}</td>
+                      <td style={{ fontSize: '12px' }}>{p.category?.name || '—'}</td>
+                      <td style={{ fontWeight: 700 }}>₹{Number(p.price).toLocaleString('en-IN')}</td>
+                      <td style={{ fontSize: '12px' }}>{p.weight || '—'}</td>
                       <td>{p.stock}</td>
-                      <td><span style={{ color: p.isActive ? 'var(--green)' : 'var(--red)', fontSize: '12px', fontWeight: 600 }}>{p.isActive ? 'â— Active' : 'â—‹ Hidden'}</span></td>
+                      <td><span style={{ color: p.isActive ? 'var(--green)' : 'var(--red)', fontSize: '12px', fontWeight: 600 }}>{p.isActive ? '● Active' : '○ Hidden'}</span></td>
                       <td style={{ display: 'flex', gap: 5 }}>
                         <button className="action-btn edit" onClick={() => { setEditProduct(p); setShowModal(true) }}>Edit</button>
                         <button className="action-btn delete" onClick={() => handleDeleteProduct(p.id)}>Delete</button>

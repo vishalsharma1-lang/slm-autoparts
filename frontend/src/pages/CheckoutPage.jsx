@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from '../api'
 import toast from 'react-hot-toast'
@@ -16,7 +16,7 @@ export default function CheckoutPage() {
   if (items.length === 0) return (
     <div className="page-wrap">
       <div className="container" style={{ padding: '80px 16px', textAlign: 'center' }}>
-        <div style={{ fontSize: '3rem', marginBottom: 16 }}>ðŸ›’</div>
+        <div style={{ fontSize: '3rem', marginBottom: 16 }}>🛒</div>
         <h2 style={{ marginBottom: 16 }}>Your cart is empty</h2>
         <button className="btn btn-primary" onClick={() => navigate('/catalog')}>Browse Parts</button>
       </div>
@@ -32,7 +32,7 @@ export default function CheckoutPage() {
     try {
       const res = await axios.post('/api/orders', { ...form, items: items.map(i => ({ productId: i.id, quantity: i.qty })) })
       clearCart()
-      toast.success('Order placed! ðŸŽ‰')
+      toast.success('Order placed! 🎉')
       navigate(`/track?orderId=${res.data.orderId}`)
     } catch (e) {
       toast.error(e.response?.data?.error || 'Failed to place order')
@@ -63,9 +63,9 @@ export default function CheckoutPage() {
                 <div className="form-group"><label>Notes (optional)</label><textarea value={form.notes} onChange={e => set('notes', e.target.value)} rows={2} placeholder="Vehicle number, special instructions..." /></div>
               </div>
               <div className="form-card" style={{ marginTop: 14 }}>
-                <h2>ðŸ’³ Payment Method</h2>
+                <h2>💳 Payment Method</h2>
                 <div style={{ background: '#f9fafb', border: '1.5px solid var(--border)', borderRadius: 8, padding: '14px 16px', fontSize: '13px', color: 'var(--text2)' }}>
-                  ðŸ’µ <b>Cash on Delivery</b> â€” Pay when your parts arrive. Safe &amp; easy.
+                  ðŸ’µ <b>Cash on Delivery</b> — Pay when your parts arrive. Safe &amp; easy.
                 </div>
               </div>
             </div>
@@ -75,20 +75,20 @@ export default function CheckoutPage() {
               {items.map(item => (
                 <div key={item.id} className="summary-item">
                   <span style={{ flex: 1, paddingRight: 8, lineHeight: 1.4 }}>{item.name} Ã— {item.qty}</span>
-                  <span style={{ fontWeight: 600 }}>â‚¹{(item.price * item.qty).toLocaleString('en-IN')}</span>
+                  <span style={{ fontWeight: 600 }}>₹{(item.price * item.qty).toLocaleString('en-IN')}</span>
                 </div>
               ))}
               <hr className="summary-divider" />
-              <div className="summary-item"><span>Subtotal</span><span>â‚¹{total.toLocaleString('en-IN')}</span></div>
+              <div className="summary-item"><span>Subtotal</span><span>₹{total.toLocaleString('en-IN')}</span></div>
               <div className="summary-item">
                 <span>Shipping</span>
-                <span style={{ color: delivery === 0 ? 'var(--green)' : 'inherit' }}>{delivery === 0 ? 'FREE' : `â‚¹${delivery}`}</span>
+                <span style={{ color: delivery === 0 ? 'var(--green)' : 'inherit' }}>{delivery === 0 ? 'FREE' : `₹${delivery}`}</span>
               </div>
-              {delivery === 0 && <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 6, padding: '7px 12px', fontSize: '11.5px', color: '#15803d', marginBottom: 10 }}>ðŸŽ‰ Free shipping applied!</div>}
+              {delivery === 0 && <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 6, padding: '7px 12px', fontSize: '11.5px', color: '#15803d', marginBottom: 10 }}>🎉 Free shipping applied!</div>}
               <hr className="summary-divider" />
-              <div className="summary-total"><span>Total (incl. GST)</span><span className="amt">â‚¹{grandTotal.toLocaleString('en-IN')}</span></div>
+              <div className="summary-total"><span>Total (incl. GST)</span><span className="amt">₹{grandTotal.toLocaleString('en-IN')}</span></div>
               <button type="submit" className="btn-checkout" style={{ marginTop: 18 }} disabled={submitting}>
-                {submitting ? 'Placing Order...' : 'âœ… Place Order (COD)'}
+                {submitting ? 'Placing Order...' : '✅ Place Order (COD)'}
               </button>
             </div>
           </div>

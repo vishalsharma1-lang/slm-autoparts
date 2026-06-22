@@ -3,6 +3,9 @@ package com.slm.service;
 import com.slm.entity.Product;
 import com.slm.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,24 +17,24 @@ public class ProductService {
 
     private final ProductRepository repo;
 
-    public List<Product> getAll() {
-        return repo.findByIsActiveTrueOrderByNameAsc();
+    public Page<Product> getAll(int page, int size) {
+        return repo.findByIsActiveTrueOrderByNameAsc(PageRequest.of(page, size));
     }
 
     public List<Product> getAllAdmin() {
         return repo.findAll();
     }
 
-    public List<Product> getByCategory(Long categoryId) {
-        return repo.findByCategoryIdAndIsActiveTrueOrderByNameAsc(categoryId);
+    public Page<Product> getByCategory(Long categoryId, int page, int size) {
+        return repo.findByCategoryIdAndIsActiveTrueOrderByNameAsc(categoryId, PageRequest.of(page, size));
     }
 
     public List<Product> getFeatured() {
         return repo.findByIsActiveTrueAndIsFeaturedTrueOrderByNameAsc();
     }
 
-    public List<Product> search(String q) {
-        return repo.search(q);
+    public Page<Product> search(String q, int page, int size) {
+        return repo.search(q, PageRequest.of(page, size));
     }
 
     public Optional<Product> getById(Long id) {
